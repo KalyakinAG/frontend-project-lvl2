@@ -1,3 +1,5 @@
+# Учебный проект 2 "Вычислитель отличий" из курса обучения "Фронтенд-разработчик" на Hexlet
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/ee6031cc3d97053e9573/maintainability)](https://codeclimate.com/github/KalyakinAG/frontend-project-lvl2/maintainability)
 ![Node CI](https://github.com/KalyakinAG/frontend-project-lvl2/workflows/Node%20CI/badge.svg)
 
