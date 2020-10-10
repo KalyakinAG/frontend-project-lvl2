@@ -1,7 +1,8 @@
 {
-  "name": "frontend-project-lvl2",
+  "name": "gendiff",
   "version": "1.0.0",
   "description": "Проект Вычислитель отличий",
+  "main": "index.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
