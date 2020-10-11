@@ -21,7 +21,7 @@ const genDiff = (filepath1, filepath2) => {
   });
   diff2.forEach((key) => strings.push(` + ${key}: ${obj2[key]}`));
   strings.push('}');
-  console.log(strings.join('\n'));
+  return strings.join('\n');
 };
 
 export default genDiff;

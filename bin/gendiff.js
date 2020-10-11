@@ -8,7 +8,7 @@ program.description('Compares two configuration files and shows a difference.');
 program.option('-d, --debug', 'debug');
 program.option('-f, --format [type]', 'output format');
 program.arguments('<filepath1> <filepath2>');
-program.action(genDiff);
+program.action((filepath1, filepath2) => console.log(genDiff(filepath1, filepath2)));
 
 program.parse(process.argv);
 if (program.debug) {
