@@ -14,7 +14,6 @@ before_script:
 
 script: 
   - make lint
-  - make check-types
   - make test
 
 after_script:
