@@ -1,9 +1,9 @@
 # single test suite, non-parallel build.
+language: node_js
 
 env:
   global:
     - CC_TEST_REPORTER_ID=565b159044b7f79777d6041b38cfcc72171497e8749127c0e3be2bec60d3edfc
-  language: node_js
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
