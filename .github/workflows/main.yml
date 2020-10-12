@@ -40,7 +40,7 @@ jobs:
         # Run Linter
         run: |
           make lint
-          - name: Run linter
+      - name: Run test
         # Run Test
         run: |
           make test
