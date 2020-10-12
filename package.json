@@ -10,6 +10,10 @@
   "scripts": {
     "test": "npx -n --experimental-vm-modules jest"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KalyakinAG/frontend-project-lvl2.git"
