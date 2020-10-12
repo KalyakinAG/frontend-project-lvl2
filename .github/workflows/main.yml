@@ -44,4 +44,7 @@ jobs:
         # Run Test
         run: |
           make test
-  
+      - name: Run test coverage
+        # Run Test coverage
+        run: |
+          npm test -- --coverage
