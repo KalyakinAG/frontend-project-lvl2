@@ -1,9 +1,9 @@
 import path from 'path';
-import fs from 'fs';
+import parse from './src/parsers.js';
 
 const genDiff = (filepath1, filepath2) => {
-  const obj1 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath1), 'utf8'));
-  const obj2 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath2), 'utf8'));
+  const obj1 = parse(path.resolve(process.cwd(), filepath1));
+  const obj2 = parse(path.resolve(process.cwd(), filepath2));
   const keys1 = new Set(Object.keys(obj1));
   const keys2 = new Set(Object.keys(obj2));
   const intersection = new Set([...keys1].filter((x) => keys2.has(x)));

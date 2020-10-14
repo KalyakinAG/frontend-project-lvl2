@@ -11,9 +11,14 @@ const filepath1 = `${__dirname}/../__fixtures__`;
 const filepath2 = `${__dirname}/../__fixtures__`;
 const expectedFilePath = `${__dirname}/../__fixtures__`;
 
-for (let i = 1; i <= 3; i += 1) {
-  test(`Тест ${i}`, () => {
-    expect(genDiff(`${filepath1}/${i}/file1.json`, `${filepath2}/${i}/file2.json`))
-      .toEqual(fs.readFileSync(`${expectedFilePath}/${i}/expected_file.txt`, 'utf8'));
-  });
-}
+const tests = [
+  { dir: '1', format: '.json', descr: '±' },
+  { dir: '2', format: '.json', descr: '+' },
+  { dir: '3', format: '.json', descr: '-' },
+  { dir: '4', format: '.yaml', descr: '±.yaml' },
+];
+
+tests.forEach((item) => test(`Тест ${item.descr}`, () => {
+  expect(genDiff(`${filepath1}/${item.dir}/file1${item.format}`, `${filepath2}/${item.dir}/file2${item.format}`))
+    .toEqual(fs.readFileSync(`${expectedFilePath}/${item.dir}/expected_file.txt`, 'utf8'));
+}));
