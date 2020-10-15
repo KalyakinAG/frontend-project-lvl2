@@ -7,3 +7,9 @@
 ## Описание
 
 Пакет является учебным проектом реализации CLI приложений на Node.js. Учебное приложение задействует библиотеку построения CLI программ, включающую генерацию описания, описание опций и их значений.
+
+## Пример работы
+
+### сравнение файлов json
+
+[![asciicast](https://asciinema.org/a/B4RcSJFasqpRxP4rSCLHd0wbk.svg)](https://asciinema.org/a/B4RcSJFasqpRxP4rSCLHd0wbk)
