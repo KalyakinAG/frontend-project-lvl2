@@ -13,3 +13,7 @@
 ### сравнение файлов json
 
 [![asciicast](https://asciinema.org/a/B4RcSJFasqpRxP4rSCLHd0wbk.svg)](https://asciinema.org/a/B4RcSJFasqpRxP4rSCLHd0wbk)
+
+### сравнение файлов ini
+
+[![asciicast](https://asciinema.org/a/tXOdabCsad6Q0rsHEs4dcqBBR.svg)](https://asciinema.org/a/tXOdabCsad6Q0rsHEs4dcqBBR)
