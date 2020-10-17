@@ -1,15 +1,15 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs';
-import genDiff from '../index.js';
+import genDiff from '../src/index.js';
 
 /* eslint-disable no-underscore-dangle */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const filepath1 = `${__dirname}/../__fixtures__`;
-const filepath2 = `${__dirname}/../__fixtures__`;
-const expectedFilePath = `${__dirname}/../__fixtures__`;
+const filepath1 = `${__dirname}/./__fixtures__`;
+const filepath2 = `${__dirname}/./__fixtures__`;
+const expectedFilePath = `${__dirname}/./__fixtures__`;
 
 const tests = [
   { dir: '1', format: '.json', descr: '±' },

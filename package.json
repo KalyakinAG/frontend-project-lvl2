@@ -2,7 +2,7 @@
   "name": "gendiff",
   "version": "1.0.0",
   "description": "Проект Вычислитель отличий",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
@@ -12,7 +12,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverage": true
+    "collectCoverage": false
   },
   "repository": {
     "type": "git",
@@ -29,11 +29,6 @@
     "js-yaml": "^3.14.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.11.5",
-    "babel-jest": "^26.5.2",
     "eslint": "^7.10.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.1",

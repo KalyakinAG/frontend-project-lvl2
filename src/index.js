@@ -1,5 +1,5 @@
 import path from 'path';
-import parse from './src/parsers.js';
+import parse from './parsers.js';
 
 const genDiff = (filepath1, filepath2) => {
   const obj1 = parse(path.resolve(process.cwd(), filepath1));
