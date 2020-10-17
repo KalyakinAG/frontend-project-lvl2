@@ -12,8 +12,9 @@ const filepath2 = `${__dirname}/./__fixtures__`;
 const expectedFilePath = `${__dirname}/./__fixtures__`;
 
 const tests = [
-  { dir: '1', format: '.json', descr: '±' },
+  { dir: '1', format: '.json', descr: '±json' },
   { dir: '2', format: '.yaml', descr: '±.yaml' },
+  { dir: '3', format: '.ini', descr: '±.ini' },
 ];
 
 test.each(tests)('Тест %o', (item) => {
