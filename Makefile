@@ -3,7 +3,7 @@ install:
 uninstall:
 	sudo npm uninstall
 gendiff:
-	node bin/gendiff.js ./__tests__/__fixtures__/5/file1.json ./__tests__/__fixtures__/5/file2.json --format plain
+	node bin/gendiff.js ./__tests__/__fixtures__/1/file1.json ./__tests__/__fixtures__/1/file2.json --format plain
 publish:
 	sudo npm publish --dry-run
 lint:

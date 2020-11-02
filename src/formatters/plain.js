@@ -13,7 +13,7 @@ const formatPlain = (diffNode, fullPropertyParentName = '') => {
   }
   const fullPropertyName = `${fullPropertyParentName}${(diffNode.name === '' || fullPropertyParentName === '') ? '' : '.'}${diffNode.name}`;
   if (diffNode.oper === '*') {
-    return `Property '${fullPropertyParentName}.${diffNode.name}' was updated. From ${formatValue(diffNode.valueFrom)} to ${formatValue(diffNode.valueTo)}`;
+    return `Property '${fullPropertyName}' was updated. From ${formatValue(diffNode.valueFrom)} to ${formatValue(diffNode.valueTo)}`;
   }
   if (diffNode.isComplex && diffNode.oper === ' ') {
     return diffNode.properties.flatMap((item) => formatPlain(item, `${fullPropertyName}`)).filter((item) => item !== '').join('\n');
