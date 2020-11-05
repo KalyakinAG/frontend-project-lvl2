@@ -3,7 +3,7 @@
 import program from 'commander';
 import genDiff from '../src/index.js';
 
-program.version('1.0.0.1');
+program.version('1.0.0');
 program.description('Compares two configuration files and shows a difference.');
 program.option('-d, --debug', 'debug');
 program.option('-f, --format [type]', 'output format', 'stylish');
