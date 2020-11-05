@@ -41,6 +41,13 @@ const orderBy = (prop) => {
 };
 
 //  Формирование универсальной структуры сравнения объектов
+// name - string
+// iscomplex - boolean
+// value - рекурсивная структура объекта
+// properties - [] - массив самоподобных объектов сравнения
+// oper - char - '-', '+' - если свойство удалено или добавлено, '*' - если свойство изменено
+// valueFrom - рекурсивная структура объекта источника (только для операции '*')
+// valueTo - рекурсивная структура объекта приемника (только для операции '*')
 const genPropertyDiff = (obj1, obj2, PropertyName = '') => {
   const keys1 = new Set(Object.keys(obj1));
   const keys2 = new Set(Object.keys(obj2));
