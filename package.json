@@ -11,8 +11,7 @@
     "test": "npx -n --experimental-vm-modules jest"
   },
   "jest": {
-    "testEnvironment": "node",
-    "collectCoverage": false
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
