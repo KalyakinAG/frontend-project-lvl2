@@ -1,15 +1,48 @@
-const formatStylish = (diffNode, level = 0) => {
-  if (diffNode.oper === '*') {
-    return [formatStylish(diffNode.valueFrom, level), formatStylish(diffNode.valueTo, level)].join('\n');
-  }
-  if (diffNode.isComplex) {
-    return [
-      level === 0 ? '{' : `${' '.repeat(level * 4 - 2)}${diffNode.oper} ${diffNode.name}: {`,
-      ...diffNode.properties.flatMap((item) => formatStylish(item, level + 1)),
-      `${' '.repeat(level * 4)}}`,
-    ].join('\n');
-  }
-  return `${' '.repeat(level * 4 - 2)}${diffNode.oper} ${diffNode.name}: ${diffNode.value}`;
+const isComplex = (value) => typeof value === 'object';
+
+const formatValue = (value, offset) => {
+  const getFormat = (level = 0) => {
+    const shift = `${offset}${' '.repeat(level * 4)}`;
+    const format = (levelValue) => {
+      if (isComplex(levelValue)) {
+        const lines = Object.keys(levelValue).map((key) => `${shift}      ${key}: ${getFormat(level + 1)(levelValue[key])}`);
+        return [
+          '{',
+          ...lines,
+          `${shift}  }`,
+        ].join('\n');
+      }
+      return levelValue;
+    };
+    return format;
+  };
+  return getFormat()(value);
+};
+
+const formatStylish = (diff) => {
+  const getFormat = (level = 1) => {
+    const offset = ' '.repeat(level * 4 - 2);
+    const format = (item) => {
+      if (item.isComplex) {
+        return [
+          `${offset}  ${item.name}: {`,
+          ...item.properties.flatMap(getFormat(level + 1)),
+          `${offset}  }`,
+        ];
+      }
+      if (item.oper === '*') {
+        return [
+          `${offset}- ${item.name}: ${formatValue(item.valueFrom, offset)}`,
+          `${offset}+ ${item.name}: ${formatValue(item.valueTo, offset)}`,
+        ];
+      }
+      return [
+        `${offset}${item.oper} ${item.name}: ${formatValue(item.value, offset)}`,
+      ];
+    };
+    return format;
+  };
+  return `{\n${diff.flatMap(getFormat()).join('\n')}\n}`;
 };
 
 export default formatStylish;

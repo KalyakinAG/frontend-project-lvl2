@@ -1,24 +1,36 @@
-const formatPlain = (diffNode, fullPropertyParentName = '') => {
-  const formatValue = (obj) => {
-    if (obj.isComplex) {
-      return '[complex value]';
-    }
-    if (typeof obj.value === 'string') {
-      return `'${obj.value}'`;
-    }
-    return obj.value;
+const isComplex = (value) => typeof value === 'object';
+
+const formatValue = (obj) => {
+  if (isComplex(obj)) {
+    return '[complex value]';
+  }
+  if (typeof obj === 'string') {
+    return `'${obj}'`;
+  }
+  return obj;
+};
+
+const formatPlain = (diff) => {
+  const getFormat = (parentPath = '') => {
+    const format = (item) => {
+      const fullPath = `${parentPath}${(parentPath === '' ? '' : '.')}${item.name}`;
+      if (item.isComplex) {
+        return item.properties.flatMap(getFormat(fullPath));
+      }
+      if (item.oper === '*') {
+        return `Property '${fullPath}' was updated. From ${formatValue(item.valueFrom)} to ${formatValue(item.valueTo)}`;
+      }
+      if (item.oper === '-') {
+        return `Property '${fullPath}' was removed`;
+      }
+      if (item.oper === '+') {
+        return `Property '${fullPath}' was added with value: ${formatValue(item.value)}`;
+      }
+      return undefined;
+    };
+    return format;
   };
-  if (!diffNode.isComplex && diffNode.oper === ' ') {
-    return '';
-  }
-  const fullPropertyName = `${fullPropertyParentName}${(diffNode.name === '' || fullPropertyParentName === '') ? '' : '.'}${diffNode.name}`;
-  if (diffNode.oper === '*') {
-    return `Property '${fullPropertyName}' was updated. From ${formatValue(diffNode.valueFrom)} to ${formatValue(diffNode.valueTo)}`;
-  }
-  if (diffNode.isComplex && diffNode.oper === ' ') {
-    return diffNode.properties.flatMap((item) => formatPlain(item, `${fullPropertyName}`)).filter((item) => item !== '').join('\n');
-  }
-  return `Property '${fullPropertyName}' ${diffNode.oper === '-' ? 'was removed' : `was added with value: ${formatValue(diffNode)}`}`;
+  return diff.flatMap(getFormat()).filter((item) => item !== undefined).join('\n');
 };
 
 export default formatPlain;

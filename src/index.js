@@ -1,28 +1,6 @@
-import path from 'path';
-import parse from './parsers.js';
 import format from './formatters/index.js';
 
 const isComplex = (value) => typeof value === 'object';
-
-//  Отображение свойства объекта в структуру вида:
-// {name, isComplex, value | properties, oper}
-const mapProperty = (obj, key, oper = ' ') => {
-  const property = obj[key];
-  if (isComplex(property)) {
-    return {
-      name: key,
-      isComplex: true,
-      properties: Object.keys(property).map((name) => mapProperty(property, name)),
-      oper,
-    };
-  }
-  return {
-    name: key,
-    isComplex: false,
-    value: property,
-    oper,
-  };
-};
 
 //  Сортировка по свойству
 const orderBy = (prop) => {
@@ -44,62 +22,70 @@ const orderBy = (prop) => {
 //  Параметры:
 // - obj1 - объект
 // - obj2 - объект
-// - PropertyName - string - имя свойства
 //  Возвращаемое значение:
+//  [{
 // - name - string - наименование свойства сравнения
 // - isComplex - boolean - определяет наличие свойств
 // - properties - [] - массив самоподобных объектов сравнения
-// - oper - char - тип операции, '-', '+' - если свойство удалено или добавлено, '*' - если изменено
+// - oper - char - тип операции, '-', '+' - удалено/добавлено, '*' -  изменено, ' ' - без изменения
 // - value - объект или значение - определяет конечное значение свойства для операций '-', '+'
 // - valueFrom - объект или значение - конечное значение свойства для 1-ой структуры, операция '*'
 // - valueTo - объект или значение - конечное значение свойства для 2-й структуры, операция '*'
-//
-const genPropertyDiff = (obj1, obj2, PropertyName = '') => {
+//  }] - массив - свойства сравнения
+const genPropertyDiff = (obj1, obj2) => {
   const keys1 = new Set(Object.keys(obj1));
   const keys2 = new Set(Object.keys(obj2));
-  const inter = new Set([...keys1].filter((x) => keys2.has(x)));
-  const diff1 = new Set([...keys1].filter((x) => !keys2.has(x)));
-  const diff2 = new Set([...keys2].filter((x) => !keys1.has(x)));
-  const properties = [];
-  diff1.forEach((key) => properties.push(mapProperty(obj1, key, '-')));
-  diff2.forEach((key) => properties.push(mapProperty(obj2, key, '+')));
-  inter.forEach((key) => {
+  const crossKeys = [...keys1].filter((x) => keys2.has(x));
+  const excludedKeys = [...keys1].filter((x) => !keys2.has(x));
+  const addedKeys = [...keys2].filter((x) => !keys1.has(x));
+
+  const excludeProperties = excludedKeys.map((key) => ({
+    name: key,
+    isComplex: false,
+    oper: '-',
+    value: obj1[key],
+  }));
+
+  const addedProperties = addedKeys.map((key) => ({
+    name: key,
+    isComplex: false,
+    oper: '+',
+    value: obj2[key],
+  }));
+
+  const crossProperties = crossKeys.map((key) => {
     const obj1IsComplex = isComplex(obj1[key]);
     const obj2IsComplex = isComplex(obj2[key]);
     if (obj1IsComplex && obj2IsComplex) {
-      properties.push(genPropertyDiff(obj1[key], obj2[key], key));
-      return;
+      return {
+        name: key,
+        isComplex: true,
+        properties: genPropertyDiff(obj1[key], obj2[key]),
+      };
     }
     if ((!obj1IsComplex && !obj2IsComplex) && (obj1[key] === obj2[key])) {
-      properties.push({
+      return {
         name: key,
         isComplex: false,
-        value: obj1[key],
         oper: ' ',
-      });
-      return;
+        value: obj1[key],
+      };
     }
-    properties.push({
+    return {
       name: key,
+      isComplex: false,
       oper: '*',
-      valueFrom: mapProperty(obj1, key, '-'),
-      valueTo: mapProperty(obj2, key, '+'),
-    });
+      valueFrom: obj1[key],
+      valueTo: obj2[key],
+    };
   });
-  properties.sort(orderBy('name'));
-  return {
-    name: PropertyName,
-    isComplex: true,
-    properties,
-    oper: ' ',
-  };
+
+  return [...excludeProperties, ...crossProperties, ...addedProperties].sort(orderBy('name'));
 };
 
-const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-  const obj1 = parse(path.resolve(process.cwd(), filepath1));
-  const obj2 = parse(path.resolve(process.cwd(), filepath2));
-  const tree = genPropertyDiff(obj1, obj2);
-  return format(tree, formatName);
+const genDiff = (obj1, obj2, formatName = 'stylish') => {
+  const diff = genPropertyDiff(obj1, obj2);
+  return format(diff, formatName);
 };
 
 export default genDiff;
