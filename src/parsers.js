@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
 import ini from 'ini';
 
@@ -15,10 +13,6 @@ const getParser = (format) => {
   return parse;
 };
 
-const parse = (filepath) => {
-  const format = path.extname(filepath);
-  const data = fs.readFileSync(filepath, 'utf8');
-  return getParser(format)(data);
-};
+const parse = (data, format) => getParser(format)(data);
 
 export default parse;
