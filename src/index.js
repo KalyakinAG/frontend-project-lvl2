@@ -1,7 +1,11 @@
+import path from 'path';
 import format from './formatters/index.js';
+import parse from './parsers.js';
 import genPropertyDiff from './diff.js';
 
-const genDiff = (obj1, obj2, formatName = 'stylish') => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
+  const obj1 = parse(path.resolve(process.cwd(), filepath1));
+  const obj2 = parse(path.resolve(process.cwd(), filepath2));
   const diff = genPropertyDiff(obj1, obj2);
   return format(diff, formatName);
 };
