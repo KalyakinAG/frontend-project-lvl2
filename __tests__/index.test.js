@@ -8,10 +8,13 @@ describe.each`
   ext    | format | descr
   ${'json'} | ${'stylish'} | ${'diff for json'}
   ${'json'} | ${'plain'} | ${'diff for json'}
+  ${'json'} | ${'json'} | ${'diff for json'}
   ${'yaml'} | ${'stylish'} | ${'diff for yaml'}
   ${'yaml'} | ${'plain'} | ${'diff for yaml'}
+  ${'yaml'} | ${'json'} | ${'diff for yaml'}
   ${'ini'} | ${'stylish'} | ${'diff for ini'}
   ${'ini'} | ${'plain'} | ${'diff for ini'}
+  ${'ini'} | ${'json'} | ${'diff for ini'}
 `(`Params: ${'$ext -format $format'}`, ({ ext, format, descr }) => {
   test(`${descr}`, () => {
     const filePath1 = path.join(fixturePath, `file1.${ext}`);

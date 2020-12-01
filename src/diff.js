@@ -1,4 +1,4 @@
-const isComplex = (value) => typeof value === 'object';
+import _ from 'lodash';
 
 //  Сортировка по свойству
 const orderBy = (prop) => {
@@ -25,7 +25,7 @@ const orderBy = (prop) => {
 // - name - string - наименование свойства сравнения
 // - isComplex - boolean - определяет наличие свойств
 // - properties - [] - массив самоподобных объектов сравнения
-// - oper - char - тип операции, '-', '+' - удалено/добавлено, '*' -  изменено, ' ' - без изменения
+// - type - char - тип операции: added, deleted, changed, unchanged
 // - value - объект или значение - определяет конечное значение свойства для операций '-', '+'
 // - valueFrom - объект или значение - конечное значение свойства для 1-ой структуры, операция '*'
 // - valueTo - объект или значение - конечное значение свойства для 2-й структуры, операция '*'
@@ -33,27 +33,25 @@ const orderBy = (prop) => {
 const genPropertyDiff = (obj1, obj2) => {
   const keys1 = new Set(Object.keys(obj1));
   const keys2 = new Set(Object.keys(obj2));
-  const crossKeys = [...keys1].filter((x) => keys2.has(x));
-  const excludedKeys = [...keys1].filter((x) => !keys2.has(x));
-  const addedKeys = [...keys2].filter((x) => !keys1.has(x));
-
-  const excludeProperties = excludedKeys.map((key) => ({
-    name: key,
-    isComplex: false,
-    oper: '-',
-    value: obj1[key],
-  }));
-
-  const addedProperties = addedKeys.map((key) => ({
-    name: key,
-    isComplex: false,
-    oper: '+',
-    value: obj2[key],
-  }));
-
-  const crossProperties = crossKeys.map((key) => {
-    const obj1IsComplex = isComplex(obj1[key]);
-    const obj2IsComplex = isComplex(obj2[key]);
+  const mapKey = (key) => {
+    if (!keys2.has(key)) {
+      return {
+        name: key,
+        isComplex: false,
+        type: 'deleted',
+        value: obj1[key],
+      };
+    }
+    if (!keys1.has(key)) {
+      return {
+        name: key,
+        isComplex: false,
+        type: 'added',
+        value: obj2[key],
+      };
+    }
+    const obj1IsComplex = _.isObject(obj1[key]);
+    const obj2IsComplex = _.isObject(obj2[key]);
     if (obj1IsComplex && obj2IsComplex) {
       return {
         name: key,
@@ -65,20 +63,21 @@ const genPropertyDiff = (obj1, obj2) => {
       return {
         name: key,
         isComplex: false,
-        oper: ' ',
+        type: 'unchanged',
         value: obj1[key],
       };
     }
     return {
       name: key,
       isComplex: false,
-      oper: '*',
+      type: 'changed',
       valueFrom: obj1[key],
       valueTo: obj2[key],
     };
-  });
-
-  return [...excludeProperties, ...crossProperties, ...addedProperties].sort(orderBy('name'));
+  };
+  const unionKeys = [...new Set([...keys1, ...keys2])];
+  const diff = unionKeys.map(mapKey);
+  return diff.sort(orderBy('name'));
 };
 
 export default genPropertyDiff;

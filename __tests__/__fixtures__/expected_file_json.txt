@@ -1,0 +1,132 @@
+[
+  {
+    "name": "common",
+    "isComplex": true,
+    "properties": [
+      {
+        "name": "follow",
+        "isComplex": false,
+        "type": "added",
+        "value": false
+      },
+      {
+        "name": "setting1",
+        "isComplex": false,
+        "type": "unchanged",
+        "value": "Value 1"
+      },
+      {
+        "name": "setting2",
+        "isComplex": false,
+        "type": "deleted",
+        "value": 200
+      },
+      {
+        "name": "setting3",
+        "isComplex": false,
+        "type": "changed",
+        "valueFrom": true,
+        "valueTo": {
+          "key": "value"
+        }
+      },
+      {
+        "name": "setting4",
+        "isComplex": false,
+        "type": "added",
+        "value": "blah blah"
+      },
+      {
+        "name": "setting5",
+        "isComplex": false,
+        "type": "added",
+        "value": {
+          "key5": "value5"
+        }
+      },
+      {
+        "name": "setting6",
+        "isComplex": true,
+        "properties": [
+          {
+            "name": "doge",
+            "isComplex": true,
+            "properties": [
+              {
+                "name": "wow",
+                "isComplex": false,
+                "type": "changed",
+                "valueFrom": "too much",
+                "valueTo": "so much"
+              }
+            ]
+          },
+          {
+            "name": "key",
+            "isComplex": false,
+            "type": "unchanged",
+            "value": "value"
+          },
+          {
+            "name": "ops",
+            "isComplex": false,
+            "type": "added",
+            "value": "vops"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "group1",
+    "isComplex": true,
+    "properties": [
+      {
+        "name": "baz",
+        "isComplex": false,
+        "type": "changed",
+        "valueFrom": "bas",
+        "valueTo": "bars"
+      },
+      {
+        "name": "foo",
+        "isComplex": false,
+        "type": "unchanged",
+        "value": "bar"
+      },
+      {
+        "name": "nest",
+        "isComplex": false,
+        "type": "changed",
+        "valueFrom": {
+          "key": "value"
+        },
+        "valueTo": "str"
+      }
+    ]
+  },
+  {
+    "name": "group2",
+    "isComplex": false,
+    "type": "deleted",
+    "value": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  {
+    "name": "group3",
+    "isComplex": false,
+    "type": "added",
+    "value": {
+      "fee": 100500,
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      }
+    }
+  }
+]

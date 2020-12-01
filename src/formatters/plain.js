@@ -1,7 +1,7 @@
-const isComplex = (value) => typeof value === 'object';
+import _ from 'lodash';
 
 const formatValue = (obj) => {
-  if (isComplex(obj)) {
+  if (_.isObject(obj)) {
     return '[complex value]';
   }
   if (typeof obj === 'string') {
@@ -17,13 +17,13 @@ const formatPlain = (diff) => {
       if (item.isComplex) {
         return item.properties.flatMap(getFormat(fullPath));
       }
-      if (item.oper === '*') {
+      if (item.type === 'changed') {
         return `Property '${fullPath}' was updated. From ${formatValue(item.valueFrom)} to ${formatValue(item.valueTo)}`;
       }
-      if (item.oper === '-') {
+      if (item.type === 'deleted') {
         return `Property '${fullPath}' was removed`;
       }
-      if (item.oper === '+') {
+      if (item.type === 'added') {
         return `Property '${fullPath}' was added with value: ${formatValue(item.value)}`;
       }
       return undefined;
