@@ -1,21 +1,5 @@
 import _ from 'lodash';
 
-//  Сортировка по свойству
-const orderBy = (prop) => {
-  const orderByProp = (a, b) => {
-    const valueFrom = a[prop];
-    const valueTo = b[prop];
-    if (valueFrom > valueTo) {
-      return 1;
-    }
-    if (valueFrom < valueTo) {
-      return -1;
-    }
-    return 0;
-  };
-  return orderByProp;
-};
-
 //  Формирование универсальной структуры сравнения объектов
 //  Параметры:
 // - obj1 - объект
@@ -71,9 +55,8 @@ const genPropertyDiff = (obj1, obj2) => {
       valueTo: obj2[key],
     };
   };
-  const unionKeys = [...new Set([...keys1, ...keys2])];
-  const diff = unionKeys.map(mapKey);
-  return diff.sort(orderBy('name'));
+  const unionKeys = [...new Set([...keys1, ...keys2])].sort();
+  return unionKeys.map(mapKey);
 };
 
 export default genPropertyDiff;
