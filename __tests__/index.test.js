@@ -5,12 +5,10 @@ import genDiff from '../src/index.js';
 const fixturePath = path.join(process.cwd(), '__tests__', '__fixtures__');
 
 const getFilePath = (fileName) => path.join(fixturePath, fileName);
-const expectedFilePath = {
-  json: getFilePath('expected_file_json.txt'),
-  plain: getFilePath('expected_file_plain.txt'),
-  stylish: getFilePath('expected_file_stylish.txt'),
-};
-
+const expectedFilePath = new Map();
+expectedFilePath.set('json', fs.readFileSync(getFilePath('expected_file_json.txt'), 'utf8'));
+expectedFilePath.set('plain', fs.readFileSync(getFilePath('expected_file_plain.txt'), 'utf8'));
+expectedFilePath.set('stylish', fs.readFileSync(getFilePath('expected_file_stylish.txt'), 'utf8'));
 
 describe.each`
   ext    | format | descr
@@ -27,6 +25,6 @@ describe.each`
   test(`${descr}`, () => {
     const filePath1 = getFilePath(`file1.${ext}`);
     const filePath2 = getFilePath(`file2.${ext}`);
-    expect(genDiff(filePath1, filePath2, format)).toEqual(fs.readFileSync(expectedFilePath[format], 'utf8'));
+    expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFilePath.get(format));
   });
 });
