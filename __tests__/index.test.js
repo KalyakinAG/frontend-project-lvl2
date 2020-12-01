@@ -4,6 +4,14 @@ import genDiff from '../src/index.js';
 
 const fixturePath = path.join(process.cwd(), '__tests__', '__fixtures__');
 
+const getFilePath = (fileName) => path.join(fixturePath, fileName);
+const expectedFilePath = {
+  json: getFilePath('expected_file_json.txt'),
+  plain: getFilePath('expected_file_plain.txt'),
+  stylish: getFilePath('expected_file_stylish.txt'),
+};
+
+
 describe.each`
   ext    | format | descr
   ${'json'} | ${'stylish'} | ${'diff for json'}
@@ -17,9 +25,8 @@ describe.each`
   ${'ini'} | ${'json'} | ${'diff for ini'}
 `(`Params: ${'$ext -format $format'}`, ({ ext, format, descr }) => {
   test(`${descr}`, () => {
-    const filePath1 = path.join(fixturePath, `file1.${ext}`);
-    const filePath2 = path.join(fixturePath, `file2.${ext}`);
-    const fileExpectedPath = path.join(fixturePath, `expected_file_${format}.txt`);
-    expect(genDiff(filePath1, filePath2, format)).toEqual(fs.readFileSync(fileExpectedPath, 'utf8'));
+    const filePath1 = getFilePath(`file1.${ext}`);
+    const filePath2 = getFilePath(`file2.${ext}`);
+    expect(genDiff(filePath1, filePath2, format)).toEqual(fs.readFileSync(expectedFilePath[format], 'utf8'));
   });
 });
