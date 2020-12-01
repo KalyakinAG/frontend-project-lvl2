@@ -1,23 +1,20 @@
 [
   {
     "name": "common",
-    "isComplex": true,
+    "type": "tree",
     "properties": [
       {
         "name": "follow",
-        "isComplex": false,
         "type": "added",
         "value": false
       },
       {
         "name": "setting1",
-        "isComplex": false,
         "type": "unchanged",
         "value": "Value 1"
       },
       {
         "name": "setting2",
-        "isComplex": false,
         "type": "deleted",
         "value": 200
       },
@@ -32,13 +29,11 @@
       },
       {
         "name": "setting4",
-        "isComplex": false,
         "type": "added",
         "value": "blah blah"
       },
       {
         "name": "setting5",
-        "isComplex": false,
         "type": "added",
         "value": {
           "key5": "value5"
@@ -46,11 +41,11 @@
       },
       {
         "name": "setting6",
-        "isComplex": true,
+        "type": "tree",
         "properties": [
           {
             "name": "doge",
-            "isComplex": true,
+            "type": "tree",
             "properties": [
               {
                 "name": "wow",
@@ -63,13 +58,11 @@
           },
           {
             "name": "key",
-            "isComplex": false,
             "type": "unchanged",
             "value": "value"
           },
           {
             "name": "ops",
-            "isComplex": false,
             "type": "added",
             "value": "vops"
           }
@@ -79,7 +72,7 @@
   },
   {
     "name": "group1",
-    "isComplex": true,
+    "type": "tree",
     "properties": [
       {
         "name": "baz",
@@ -90,7 +83,6 @@
       },
       {
         "name": "foo",
-        "isComplex": false,
         "type": "unchanged",
         "value": "bar"
       },
@@ -107,7 +99,6 @@
   },
   {
     "name": "group2",
-    "isComplex": false,
     "type": "deleted",
     "value": {
       "abc": 12345,
@@ -118,7 +109,6 @@
   },
   {
     "name": "group3",
-    "isComplex": false,
     "type": "added",
     "value": {
       "fee": 100500,

@@ -23,9 +23,8 @@ const orderBy = (prop) => {
 //  Возвращаемое значение:
 //  [{
 // - name - string - наименование свойства сравнения
-// - isComplex - boolean - определяет наличие свойств
 // - properties - [] - массив самоподобных объектов сравнения
-// - type - char - тип операции: added, deleted, changed, unchanged
+// - type - char - тип операции: added, deleted, changed, unchanged, tree
 // - value - объект или значение - определяет конечное значение свойства для операций '-', '+'
 // - valueFrom - объект или значение - конечное значение свойства для 1-ой структуры, операция '*'
 // - valueTo - объект или значение - конечное значение свойства для 2-й структуры, операция '*'
@@ -37,7 +36,6 @@ const genPropertyDiff = (obj1, obj2) => {
     if (!keys2.has(key)) {
       return {
         name: key,
-        isComplex: false,
         type: 'deleted',
         value: obj1[key],
       };
@@ -45,7 +43,6 @@ const genPropertyDiff = (obj1, obj2) => {
     if (!keys1.has(key)) {
       return {
         name: key,
-        isComplex: false,
         type: 'added',
         value: obj2[key],
       };
@@ -55,14 +52,13 @@ const genPropertyDiff = (obj1, obj2) => {
     if (obj1IsComplex && obj2IsComplex) {
       return {
         name: key,
-        isComplex: true,
+        type: 'tree',
         properties: genPropertyDiff(obj1[key], obj2[key]),
       };
     }
     if ((!obj1IsComplex && !obj2IsComplex) && (obj1[key] === obj2[key])) {
       return {
         name: key,
-        isComplex: false,
         type: 'unchanged',
         value: obj1[key],
       };

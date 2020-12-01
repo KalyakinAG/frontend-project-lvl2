@@ -14,7 +14,7 @@ const formatPlain = (diff) => {
   const getFormat = (parentPath = '') => {
     const format = (item) => {
       const fullPath = `${parentPath}${(parentPath === '' ? '' : '.')}${item.name}`;
-      if (item.isComplex) {
+      if (item.type === 'tree') {
         return item.properties.flatMap(getFormat(fullPath));
       }
       if (item.type === 'changed') {

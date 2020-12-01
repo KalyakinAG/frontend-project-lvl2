@@ -35,7 +35,7 @@ const formatStylish = (diff) => {
             return ' ';
         }
       };
-      if (item.isComplex) {
+      if (item.type === 'tree') {
         return [
           `${offset}  ${item.name}: {`,
           ...item.properties.flatMap(getFormat(level + 1)),
