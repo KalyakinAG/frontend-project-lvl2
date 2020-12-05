@@ -27,15 +27,13 @@ const parseIni = (data) => {
 };
 
 const getParser = (format) => {
-  let parse;
-  if (format === '' || format === '.json') {
-    parse = JSON.parse;
-  } else if (format === '.yml' || format === '.yaml') {
-    parse = yaml.safeLoad;
-  } else if (format === '.ini') {
-    parse = parseIni;
+  if (format === '.yml' || format === '.yaml') {
+    return yaml.safeLoad;
   }
-  return parse;
+  if (format === '.ini') {
+    return parseIni;
+  }
+  return JSON.parse;
 };
 
 const parse = (data, format) => getParser(format)(data);

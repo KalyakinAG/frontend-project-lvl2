@@ -1,7 +1,7 @@
 [
   {
     "name": "common",
-    "type": "tree",
+    "type": "nested",
     "properties": [
       {
         "name": "follow",
@@ -20,7 +20,6 @@
       },
       {
         "name": "setting3",
-        "isComplex": false,
         "type": "changed",
         "valueFrom": true,
         "valueTo": {
@@ -41,15 +40,14 @@
       },
       {
         "name": "setting6",
-        "type": "tree",
+        "type": "nested",
         "properties": [
           {
             "name": "doge",
-            "type": "tree",
+            "type": "nested",
             "properties": [
               {
                 "name": "wow",
-                "isComplex": false,
                 "type": "changed",
                 "valueFrom": "too much",
                 "valueTo": "so much"
@@ -72,11 +70,10 @@
   },
   {
     "name": "group1",
-    "type": "tree",
+    "type": "nested",
     "properties": [
       {
         "name": "baz",
-        "isComplex": false,
         "type": "changed",
         "valueFrom": "bas",
         "valueTo": "bars"
@@ -88,7 +85,6 @@
       },
       {
         "name": "nest",
-        "isComplex": false,
         "type": "changed",
         "valueFrom": {
           "key": "value"
