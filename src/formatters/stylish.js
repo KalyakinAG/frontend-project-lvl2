@@ -5,7 +5,8 @@ const formatValue = (value, offset) => {
     const shift = `${offset}${' '.repeat(level * 4)}`;
     const format = (levelValue) => {
       if (_.isPlainObject(levelValue)) {
-        const lines = Object.keys(levelValue).map((key) => `${shift}      ${key}: ${getFormat(level + 1)(levelValue[key])}`);
+        const lines = Object.keys(levelValue)
+          .map((key) => `${shift}      ${key}: ${getFormat(level + 1)(levelValue[key])}`);
         return [
           '{',
           ...lines,

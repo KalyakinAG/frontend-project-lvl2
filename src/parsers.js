@@ -33,7 +33,10 @@ const getParser = (format) => {
   if (format === '.ini') {
     return parseIni;
   }
-  return JSON.parse;
+  if (format === '.json') {
+    return JSON.parse;
+  }
+  throw new SyntaxError(`Неизвестный формат файла ${format}`);
 };
 
 const parse = (data, format) => getParser(format)(data);

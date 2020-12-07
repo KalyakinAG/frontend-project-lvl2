@@ -1,19 +1,6 @@
 import _ from 'lodash';
 
-//  Формирование универсальной структуры сравнения объектов
-//  Параметры:
-// - obj1 - объект
-// - obj2 - объект
-//  Возвращаемое значение:
-//  [{
-// - name - string - наименование свойства сравнения
-// - properties - [] - массив самоподобных объектов сравнения
-// - type - char - тип операции: added, deleted, changed, unchanged, nested
-// - value - объект или значение - определяет конечное значение свойства для операций '-', '+'
-// - valueFrom - объект или значение - конечное значение свойства для 1-ой структуры, операция '*'
-// - valueTo - объект или значение - конечное значение свойства для 2-й структуры, операция '*'
-//  }] - массив - свойства сравнения
-const genPropertyDiff = (obj1, obj2) => {
+const genDiff = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
   const unionKeys = _.union(keys1, keys2).sort();
@@ -38,10 +25,10 @@ const genPropertyDiff = (obj1, obj2) => {
       return {
         name: key,
         type: 'nested',
-        properties: genPropertyDiff(obj1[key], obj2[key]),
+        properties: genDiff(obj1[key], obj2[key]),
       };
     }
-    if (obj1[key] !== obj2[key]) {
+    if (!_.isEqual(obj1[key], obj2[key])) {
       return {
         name: key,
         type: 'changed',
@@ -57,4 +44,4 @@ const genPropertyDiff = (obj1, obj2) => {
   });
 };
 
-export default genPropertyDiff;
+export default genDiff;
