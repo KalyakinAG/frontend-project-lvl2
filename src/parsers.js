@@ -36,7 +36,7 @@ const getParser = (type) => {
   if (type === 'json') {
     return JSON.parse;
   }
-  throw new SyntaxError(`Неизвестный формат файла ${type}`);
+  throw new SyntaxError(`Неизвестный формат файла "${type}"`);
 };
 
 const parse = (data, type) => getParser(type)(data);
