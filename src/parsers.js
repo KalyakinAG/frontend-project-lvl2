@@ -26,19 +26,19 @@ const parseIni = (data) => {
   return convert(obj);
 };
 
-const getParser = (format) => {
-  if (format === '.yml' || format === '.yaml') {
+const getParser = (type) => {
+  if (type === 'yml' || type === 'yaml') {
     return yaml.safeLoad;
   }
-  if (format === '.ini') {
+  if (type === 'ini') {
     return parseIni;
   }
-  if (format === '.json') {
+  if (type === 'json') {
     return JSON.parse;
   }
-  throw new SyntaxError(`Неизвестный формат файла ${format}`);
+  throw new SyntaxError(`Неизвестный формат файла ${type}`);
 };
 
-const parse = (data, format) => getParser(format)(data);
+const parse = (data, type) => getParser(type)(data);
 
 export default parse;

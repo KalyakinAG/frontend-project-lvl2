@@ -2,14 +2,17 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 
-const fixturePath = path.join(process.cwd(), '__tests__', '__fixtures__');
-const getFilePath = (fileName) => path.join(fixturePath, fileName);
-const expectedFilePath = new Map();
+const getFixturePath = (fileName) => {
+  const fixturePath = path.join(process.cwd(), '__tests__', '__fixtures__');
+  return path.join(fixturePath, fileName);
+};
+
+const expectedFile = new Map();
 
 beforeAll(() => {
-  expectedFilePath.set('json', fs.readFileSync(getFilePath('expected_file_json.txt'), 'utf8'));
-  expectedFilePath.set('plain', fs.readFileSync(getFilePath('expected_file_plain.txt'), 'utf8'));
-  expectedFilePath.set('stylish', fs.readFileSync(getFilePath('expected_file_stylish.txt'), 'utf8'));
+  expectedFile.set('json', fs.readFileSync(getFixturePath('expected_file_json.txt'), 'utf8'));
+  expectedFile.set('plain', fs.readFileSync(getFixturePath('expected_file_plain.txt'), 'utf8'));
+  expectedFile.set('stylish', fs.readFileSync(getFixturePath('expected_file_stylish.txt'), 'utf8'));
 });
 
 describe.each`
@@ -25,8 +28,8 @@ describe.each`
   ${'ini'} | ${'json'} | ${'diff for ini (json)'}
 `(`Params: ${'$ext -format $format'}`, ({ ext, format, descr }) => {
   test(`${descr}`, () => {
-    const filePath1 = getFilePath(`file1.${ext}`);
-    const filePath2 = getFilePath(`file2.${ext}`);
-    expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFilePath.get(format));
+    const filePath1 = getFixturePath(`file1.${ext}`);
+    const filePath2 = getFixturePath(`file2.${ext}`);
+    expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFile.get(format));
   });
 });
