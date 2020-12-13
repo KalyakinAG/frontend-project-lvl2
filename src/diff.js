@@ -17,9 +17,7 @@ const genDiff = (obj1, obj2) => {
         value: obj2[key],
       };
     }
-    const obj1IsComplex = _.isPlainObject(obj1[key]);
-    const obj2IsComplex = _.isPlainObject(obj2[key]);
-    if (obj1IsComplex && obj2IsComplex) {
+    if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
       return {
         name: key,
         type: 'nested',
