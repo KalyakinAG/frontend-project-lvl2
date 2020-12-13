@@ -29,3 +29,43 @@
 ### демонстрация вывода внутреннего формата структуры сравнения в json
 
 [![asciicast](https://asciinema.org/a/369908.svg)](https://asciinema.org/a/369908)
+
+## Установка и запуск
+
+### Установка пакета из хранилища npm
+
+```bash
+npm install frontend-project-lvl2-kalyaka -g
+```
+
+### Установка из репозитория github
+
+- Склонировать репозиторий
+- Перейти в текущую директорию пакета
+- Опубликовать пакет локально
+- Собрать пакет локально
+
+```bash
+> git clone https://github.com/KalyakinAG/frontend-project-lvl2.git ./gendiff
+> cd gendiff
+> make publish
+> make link
+```
+
+После установки запуск игр производится командой:
+
+```gendiff```
+
+## Удаление
+
+Выполнить команду в директории пакета:
+
+```bash
+> make uninstall
+```
+
+Или удалить пакет глобально:
+
+```bash
+> npm uninstall frontend-project-lvl2-kalyaka -g
+```
