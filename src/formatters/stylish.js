@@ -24,26 +24,27 @@ const formatStylish = (diff) => {
   const getFormat = (level = 1) => {
     const offset = ' '.repeat(level * 4 - 2);
     const format = (item) => {
-      if (item.type === 'nested') {
-        return [
-          `${offset}  ${item.name}: {`,
-          ...item.properties.flatMap(getFormat(level + 1)),
-          `${offset}  }`,
-        ];
+      switch (item.type) {
+        case 'nested':
+          return [
+            `${offset}  ${item.name}: {`,
+            ...item.properties.flatMap(getFormat(level + 1)),
+            `${offset}  }`,
+          ];
+        case 'added':
+          return [`${offset}+ ${item.name}: ${formatValue(item.value, offset)}`];
+        case 'deleted':
+          return [`${offset}- ${item.name}: ${formatValue(item.value, offset)}`];
+        case 'unchanged':
+          return [`${offset}  ${item.name}: ${formatValue(item.value, offset)}`];
+        case 'changed':
+          return [
+            `${offset}- ${item.name}: ${formatValue(item.valueFrom, offset)}`,
+            `${offset}+ ${item.name}: ${formatValue(item.valueTo, offset)}`,
+          ];
+        default:
+          throw new Error(`Неизвестный тип узла ${item.type}`);
       }
-      if (item.type === 'added') {
-        return [`${offset}+ ${item.name}: ${formatValue(item.value, offset)}`];
-      }
-      if (item.type === 'deleted') {
-        return [`${offset}- ${item.name}: ${formatValue(item.value, offset)}`];
-      }
-      if (item.type === 'unchanged') {
-        return [`${offset}  ${item.name}: ${formatValue(item.value, offset)}`];
-      }
-      return [
-        `${offset}- ${item.name}: ${formatValue(item.valueFrom, offset)}`,
-        `${offset}+ ${item.name}: ${formatValue(item.valueTo, offset)}`,
-      ];
     };
     return format;
   };
