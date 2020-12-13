@@ -4,7 +4,7 @@ const formatValue = (obj) => {
   if (_.isObject(obj)) {
     return '[complex value]';
   }
-  if (typeof obj === 'string') {
+  if (_.isString(obj)) {
     return `'${obj}'`;
   }
   return obj;
