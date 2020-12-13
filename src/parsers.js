@@ -27,16 +27,18 @@ const parseIni = (data) => {
 };
 
 const getParser = (type) => {
-  if (type === 'yml' || type === 'yaml') {
-    return yaml.safeLoad;
+  switch (type) {
+    case 'yml':
+      return yaml.safeLoad;
+    case 'yaml':
+      return yaml.safeLoad;
+    case 'ini':
+      return parseIni;
+    case 'json':
+      return JSON.parse;
+    default:
+      throw new Error(`Неизвестный формат файла "${type}"`);
   }
-  if (type === 'ini') {
-    return parseIni;
-  }
-  if (type === 'json') {
-    return JSON.parse;
-  }
-  throw new SyntaxError(`Неизвестный формат файла "${type}"`);
 };
 
 const parse = (data, type) => getParser(type)(data);

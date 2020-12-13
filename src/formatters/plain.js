@@ -16,7 +16,7 @@ const formatPlain = (diff) => {
       const fullPath = `${parentPath}${(parentPath === '' ? '' : '.')}${item.name}`;
       switch (item.type) {
         case 'nested':
-          return item.properties.filter((item) => item.type !== 'unchanged').flatMap(getFormat(fullPath));
+          return item.properties.filter((nestedItem) => nestedItem.type !== 'unchanged').flatMap(getFormat(fullPath));
         case 'deleted':
           return `Property '${fullPath}' was removed`;
         case 'added':
