@@ -10,7 +10,7 @@ const getFormatter = (formatName = 'stylish') => {
     case 'json':
       return (diffNode) => JSON.stringify(diffNode, ' ', 2);
     default:
-      throw new SyntaxError(`Неизвестное имя формата "${formatName}"`);
+      throw new Error(`Неизвестное имя формата "${formatName}"`);
   }
 };
 
