@@ -52,9 +52,17 @@ npm install frontend-project-lvl2-kalyaka -g
 > make link
 ```
 
-После установки запуск игр производится командой:
+После установки запуск производится командой:
 
-```gendiff```
+```bash
+> gendiff [options] <filepath1> <filepath2>
+
+Опции:
+  -V, --version        output the version number
+  -d, --debug          debug
+  -f, --format [type]  output format (default: "stylish")
+  -h, --help           display help for command
+```
 
 ## Удаление
 
