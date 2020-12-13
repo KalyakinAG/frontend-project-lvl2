@@ -4,23 +4,21 @@ import _ from 'lodash';
 
 const parseIni = (data) => {
   const convert = (objIn) => {
-    const obj = {};
+    const objOut = {};
     Object.keys(objIn).forEach((key) => {
       const value = objIn[key];
       if (_.isObject(value)) {
-        obj[key] = convert(value);
+        objOut[key] = convert(value);
         return;
       }
-      if (_.isString(value)) {
-        const valueNum = _.toNumber(value);
-        if (_.isFinite(valueNum)) {
-          obj[key] = valueNum;
-          return;
-        }
+      const valueNum = parseFloat(value);
+      if (Number.isNaN(valueNum)) {
+        objOut[key] = value;
+        return;
       }
-      obj[key] = value;
+      objOut[key] = valueNum;
     });
-    return obj;
+    return objOut;
   };
   const obj = ini.parse(data);
   return convert(obj);
