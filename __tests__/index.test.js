@@ -7,7 +7,7 @@ const getFixturePath = (fileName) => {
   return path.join(fixturePath, fileName);
 };
 
-const expectedFiles = {};
+const expectedFiles = { json: null, plain: null, stylish: null };
 
 beforeAll(() => {
   expectedFiles.json = fs.readFileSync(getFixturePath('expected_file_json.txt'), 'utf8');
