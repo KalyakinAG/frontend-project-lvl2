@@ -16,20 +16,21 @@ beforeAll(() => {
 });
 
 describe.each`
-  ext    | format | descr
-  ${'json'} | ${'stylish'} | ${'diff for json (stylish)'}
-  ${'json'} | ${'plain'} | ${'diff for json (plain)'}
-  ${'json'} | ${'json'} | ${'diff for json (json)'}
-  ${'yaml'} | ${'stylish'} | ${'diff for yaml (stylish)'}
-  ${'yaml'} | ${'plain'} | ${'diff for yaml (plain)'}
-  ${'yaml'} | ${'json'} | ${'diff for yaml (json)'}
-  ${'ini'} | ${'stylish'} | ${'diff for ini (stylish)'}
-  ${'ini'} | ${'plain'} | ${'diff for ini (plain)'}
-  ${'ini'} | ${'json'} | ${'diff for ini (json)'}
-`(`Params: ${'$ext -format $format'}`, ({ ext, format, descr }) => {
-  test(`${descr}`, () => {
-    const filePath1 = getFixturePath(`file1.${ext}`);
-    const filePath2 = getFixturePath(`file2.${ext}`);
-    expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFiles[format]);
+  ext
+  ${'json'}
+  ${'yaml'}
+  ${'ini'}
+`(`Формат данных: ${'$ext'}`, ({ ext }) => {
+  describe.each`
+    format
+    ${'stylish'}
+    ${'plain'}
+    ${'json'}
+  `(`Формат вывода: ${'$format'}`, ({ format }) => {
+    test(`${ext} -f ${format}`, () => {
+      const filePath1 = getFixturePath(`file1.${ext}`);
+      const filePath2 = getFixturePath(`file2.${ext}`);
+      expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFiles[format]);
+    });
   });
 });
