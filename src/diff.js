@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const genDiff = (obj1, obj2) => {
-  const unionKeys = [..._.union(Object.keys(obj1), Object.keys(obj2))].sort();
+  const unionKeys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
   return unionKeys.map((key) => {
     if (!_.has(obj2, key)) {
       return {
