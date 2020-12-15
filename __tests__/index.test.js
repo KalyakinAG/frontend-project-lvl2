@@ -7,12 +7,12 @@ const getFixturePath = (fileName) => {
   return path.join(fixturePath, fileName);
 };
 
-const expectedFiles = { json: null, plain: null, stylish: null };
+const expectedFiles = new Map();
 
 beforeAll(() => {
-  expectedFiles.json = fs.readFileSync(getFixturePath('expected_file_json.txt'), 'utf8');
-  expectedFiles.plain = fs.readFileSync(getFixturePath('expected_file_plain.txt'), 'utf8');
-  expectedFiles.stylish = fs.readFileSync(getFixturePath('expected_file_stylish.txt'), 'utf8');
+  expectedFiles.set('json', fs.readFileSync(getFixturePath('expected_file_json.txt'), 'utf8'));
+  expectedFiles.set('plain', fs.readFileSync(getFixturePath('expected_file_plain.txt'), 'utf8'));
+  expectedFiles.set('stylish', fs.readFileSync(getFixturePath('expected_file_stylish.txt'), 'utf8'));
 });
 
 describe.each`
@@ -30,7 +30,7 @@ describe.each`
     test(`${ext} -f ${format}`, () => {
       const filePath1 = getFixturePath(`file1.${ext}`);
       const filePath2 = getFixturePath(`file2.${ext}`);
-      expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFiles[format]);
+      expect(genDiff(filePath1, filePath2, format)).toEqual(expectedFiles.get(format));
     });
   });
 });
