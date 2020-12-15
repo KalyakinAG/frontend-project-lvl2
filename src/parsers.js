@@ -3,25 +3,18 @@ import ini from 'ini';
 import _ from 'lodash';
 
 const parseIni = (data) => {
-  const convert = (objIn) => {
-    const objOut = {};
-    Object.keys(objIn).forEach((key) => {
-      const value = objIn[key];
-      if (_.isObject(value)) {
-        objOut[key] = convert(value);
-        return;
-      }
-      const valueNum = parseFloat(value);
-      if (Number.isNaN(valueNum)) {
-        objOut[key] = value;
-        return;
-      }
-      objOut[key] = valueNum;
-    });
-    return objOut;
+  const reducer = (convertedObj, [key, value]) => {
+    if (_.isObject(value)) {
+      return { ...convertedObj, [key]: Object.entries(value).reduce(reducer, {}) };
+    }
+    const valueNum = parseFloat(value);
+    if (Number.isNaN(valueNum)) {
+      return { ...convertedObj, [key]: value };
+    }
+    return { ...convertedObj, [key]: valueNum };
   };
   const obj = ini.parse(data);
-  return convert(obj);
+  return Object.entries(obj).reduce(reducer, {});
 };
 
 const getParser = (type) => {
